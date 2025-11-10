@@ -39,29 +39,9 @@
         </el-tab-pane>
 
         <el-tab-pane label="QA Review" name="qa">
+            <QAReviewCard :ticket="ticket" />
           <div v-if="isQA">
             <QAReviewForm @submit="submitQA" />
-          </div>
-          <div v-else>
-            <el-card v-for="review in ticket.qa_reviews" :key="review?.id" class="mb-2" shadow="hover" >
-              <div class="flex flex-wrap items-center justify-between text-sm text-gray-700">
-                <div><strong>Reviewer:</strong> {{ review.reviewer.fullName }} ({{ review.reviewer.role }}) </div>
-                <div><strong>Tester:</strong> {{ review.designatedTester.fullName }}</div>
-                <div>
-                  <strong>Status:</strong>
-                  <el-tag
-                    :type="review?.agree_to_release ? 'success' : 'danger'"
-                    size="small"
-                  > {{ review?.agree_to_release ? "Approved" : "Rejected" }}
-                  </el-tag>
-                </div>
-                <div class="text-gray-500"><strong>Date:</strong>{{ new Date(review.created_at).toLocaleString() }}</div>
-              </div>
-
-              <div class="text-gray-600 text-sm mt-2 border-t pt-2">
-                <strong>Comment:</strong>{{ review?.comment || "No comment" }}
-              </div>
-            </el-card>
           </div>
         </el-tab-pane>
 
@@ -87,6 +67,7 @@ import api from "../services/api";
 import type { Ticket } from "../types";
 import DevReportForm from "../components/DevReportForm.vue";
 import QAReviewForm from "../components/QAReviewForm.vue";
+import QAReviewCard from "../components/QAReviewCard.vue";
 import RegressionForm from "../components/RegressionForm.vue";
 import { useAuthStore } from "../store";
 
