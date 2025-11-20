@@ -43,13 +43,6 @@
           <el-input type="textarea" v-model="form.description" rows="6" />
         </el-form-item>
 
-        <el-form-item label="Attachments">
-          <input type="file" multiple @change="onFiles" />
-          <div style="margin-top:8px;">
-            <div v-for="(f,i) in filesPreview" :key="i">{{ f.name }}</div>
-          </div>
-        </el-form-item>
-
         <el-form-item>
           <el-button type="primary" @click="submit">Submit</el-button>
           <el-button @click="reset">Reset</el-button>
@@ -79,8 +72,6 @@ const form = reactive({
   assignee: null as User | null,
   description: ''
 })
-const files: File[] = []
-const filesPreview: File[] = []
 const developers = ref<User[]>([])
 const router = useRouter()
 
@@ -89,14 +80,6 @@ onMounted(async () => {
   developers.value = users.filter((u: User) => u.role === 'DEVELOPER')
 })
 
-function onFiles(e: Event) {
-  const input = e.target as HTMLInputElement
-  if (!input.files) return
-  for (const f of Array.from(input.files)) {
-    files.push(f)
-    filesPreview.push(f)
-  }
-}
 
 function reset() {
   form.title = ''
@@ -106,8 +89,6 @@ function reset() {
   form.severity = 'NORMAL'
   form.module = ''
   form.assignee = null
-  files.length = 0
-  filesPreview.length = 0
 }
 
 async function submit() {
