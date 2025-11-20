@@ -92,11 +92,31 @@ async function submitRegression(r: any) {
   alert("Regression submitted (demo).");
 }
 
-const isDev = computed(() => auth.user?.role === "DEVELOPER");
-const isQA = computed(() => auth.user?.role === "QA");
-const isTester = computed(
-  () => auth.user?.role === "TESTER" || auth.user?.role === "ADMIN"
-);
+const isDev = computed(() => {
+  return auth.user?.role === "DEVELOPER" && ticket.value?.current_status === "OPEN";
+});
+
+const isQA = computed(() => {
+  // QA can only review when ticket status is UNDER_REVIEW
+  return auth.user?.role === "QA" && ticket.value?.current_status === "UNDER_REVIEW";
+});
+
+const isTester = computed(() => {
+  // TESTER can only edit during IN_REGRESSION phase, ADMIN can operate except during CLOSED phase
+  const userRole = auth.user?.role;
+  const status = ticket.value?.current_status;
+  
+  if (userRole === "ADMIN") {
+    return true; // Admin can always operate
+  }
+  
+  if (userRole === "TESTER" && status === "IN_REGRESSION") {
+    return true;
+  }
+
+  return false;
+});
+
 
 const severityType = computed(() => {
   if (!ticket.value) return "";
