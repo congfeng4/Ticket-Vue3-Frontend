@@ -18,15 +18,6 @@ export interface QAreview {
   reviewer: User
 }
 
-export interface QAreview {
-  id: string
-  agree_to_release: true
-  comment?: string
-  created_at: string
-  designatedTester: User
-  reviewer: User
-}
-
 export interface Regression {
   id: string
   regression_version: string
