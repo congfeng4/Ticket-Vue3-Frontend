@@ -93,16 +93,32 @@ export default {
       }
   },
 
-  async submitDevReport(ticketId: string, report: any) {
-    try{
-        const response = await api.post(`/api/tickets/${ticketId}/dev-report/`, report)
-        // return updated ticket
-        return response.data
-      } catch (error: any) {
-        console.error('Developer update ticket error:', error)
-        throw new Error(error.message || 'Fail to update ticket(developer)')
-      }
+
+  async submitDevReport(ticketId: string, report: any, files: File[]) {
+    try {
+      const formData = new FormData()
+      // other fields
+      Object.keys(report).forEach(key => {formData.append(key, report[key])})
+
+      // append files
+      files.forEach(file => { formData.append('self_test_screenshots', file)})
+
+      const response = await api.post(
+        `/api/tickets/${ticketId}/dev-report/`,
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }
+      )
+
+      return response.data
+
+    } catch (error: any) {
+      console.error('Developer update ticket error:', error)
+      throw new Error(error.message || 'Fail to update ticket(developer)')
+    }
   },
+
 
   async submitQAReview(ticketId: string, review: any) {
     try{

@@ -15,10 +15,6 @@
         <el-input type="textarea" v-model="form.report" rows="4" />
       </el-form-item>
 
-      <el-form-item label="Screenshots">
-        <input type="file" multiple @change="onFiles" />
-      </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="$emit('submit', form)">Submit Regression</el-button>
       </el-form-item>
@@ -35,10 +31,5 @@ const form = reactive({
   passed: true,
   report: ''
 })
-const files: File[] = []
-function onFiles(e: Event) {
-  const input = e.target as HTMLInputElement
-  if (!input.files) return
-  for (const f of Array.from(input.files)) files.push(f)
-}
+
 </script>

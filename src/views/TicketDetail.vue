@@ -27,14 +27,9 @@
         </el-tab-pane>
 
         <el-tab-pane label="Developer Report" name="dev">
+          <DevReportCard :ticket="ticket" />
           <div v-if="isDev">
             <DevReportForm @submit="submitDevReport" />
-          </div>
-          <div v-else>
-            <p style="color: #666">
-              Developer report view (demo) — when developer submits, content will appear
-              here.
-            </p>
           </div>
         </el-tab-pane>
 
@@ -46,13 +41,9 @@
         </el-tab-pane>
 
         <el-tab-pane label="Regression" name="reg">
+            <RegressionCard :ticket="ticket" />
           <div v-if="isTester">
             <RegressionForm @submit="submitRegression" />
-          </div>
-          <div v-else>
-            <p style="color: #666">
-              Regression area — tester will run regression and submit results.
-            </p>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -66,8 +57,10 @@ import { useRoute } from "vue-router";
 import api from "../services/api";
 import type { Ticket } from "../types";
 import DevReportForm from "../components/DevReportForm.vue";
+import DevReportCard from "../components/DevReportCard.vue";
 import QAReviewForm from "../components/QAReviewForm.vue";
 import QAReviewCard from "../components/QAReviewCard.vue";
+import RegressionCard from "../components/RegressionCard.vue";
 import RegressionForm from "../components/RegressionForm.vue";
 import { useAuthStore } from "../store";
 
@@ -81,8 +74,8 @@ onMounted(async () => {
   ticket.value = await api.getTicket(id);
 });
 
-async function submitDevReport(rep: any) {
-  await api.submitDevReport(id, rep);
+async function submitDevReport(rep: any, files: File[]) {
+  await api.submitDevReport(id, rep, files);
   ticket.value = await api.getTicket(id);
   alert("Developer report submitted to QA (demo).");
 }
@@ -108,12 +101,16 @@ const isTester = computed(
 const severityType = computed(() => {
   if (!ticket.value) return "";
   switch (ticket.value.severity) {
+    case "HINT":
+      return "info";
+    case "NORMAL":
+      return "primary";
     case "CRITICAL":
       return "danger";
     case "SEVERE":
       return "warning";
     default:
-      return "";
+      return undefined;
   }
 });
 </script>

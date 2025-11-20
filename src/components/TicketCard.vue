@@ -23,10 +23,16 @@ const props = defineProps<{ ticket: Ticket }>()
 
 function severityToType(s: string) {
   switch (s) {
-    case 'CRITICAL': return 'danger'
-    case 'SEVERE': return 'warning'
-    case 'NORMAL': return ''
-    default: return 'info'
+    case "HINT":
+      return "info";
+    case "NORMAL":
+      return "primary";
+    case "CRITICAL":
+      return "danger";
+    case "SEVERE":
+      return "warning";
+    default:
+      return undefined;
   }
 }
 </script>

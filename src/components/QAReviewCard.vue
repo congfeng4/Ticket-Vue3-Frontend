@@ -5,7 +5,7 @@
     <div>
       <div style="font-weight:600;">{{ review.reviewer.fullName }}</div>
       <div style="color:#666; font-size:13px; margin-top:2px;">
-        {{ new Date(review.created_at).toLocaleString() }}
+        Submitted:{{ new Date(review.created_at).toLocaleString() }}
       </div>
       <div style="margin-top:8px; color:#444;">{{ review?.comment || "No comment" }}</div>
     </div>
