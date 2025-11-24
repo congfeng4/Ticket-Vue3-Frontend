@@ -3,7 +3,7 @@
   <div class="container" style="max-width:420px;">
     <el-card>
       <h2 style="margin-bottom:6px;">Sign in</h2>
-      <p style="color:#666; margin-bottom:18px;">Enter your account (demo users: alice/bob/carol, password = "password")</p>
+      <p style="color:#666; margin-bottom:18px;">Enter your account</p>
 
       <el-form :model="form" :rules="rules" ref="formRef" label-position="top">
         <el-form-item label="Username" prop="username">

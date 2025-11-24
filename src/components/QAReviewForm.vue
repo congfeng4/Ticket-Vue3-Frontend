@@ -9,7 +9,7 @@
 
       <el-form-item v-if="form.agree_to_release" label="Designate Tester">
         <el-select v-model="form.designated_tester" placeholder="Select tester">
-          <el-option v-for="u in testers" :key="u.id" :label="u.fullName || u.username" :value="u" />
+          <el-option v-for="u in testers" :key="u.id" :label="u.fullName || u.username" :value="u.id" />
         </el-select>
       </el-form-item>
 
