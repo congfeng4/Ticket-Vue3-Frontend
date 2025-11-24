@@ -19,9 +19,11 @@
         </el-form-item>
       </el-form>
 
-      <div v-if="loading" style="text-align:center; padding:24px;">
-        <el-spinner />
-      </div>
+      <el-skeleton v-if="loading" :rows="3" animated>
+        <el-skeleton-item variant="text" style="width: 60%; margin-bottom: 8px" />
+        <el-skeleton-item variant="text" style="width: 40%; margin-bottom: 8px" />
+        <el-skeleton-item variant="p" style="height: 60px" />
+      </el-skeleton>
 
       <div v-if="result">
         <el-divider />
