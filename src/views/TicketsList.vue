@@ -94,7 +94,7 @@ function applyCurrentFilters() {
   box-sizing: border-box;
 }
 .card-wrapper {
-  width: 60%;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

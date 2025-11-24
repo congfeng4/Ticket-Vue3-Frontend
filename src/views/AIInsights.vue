@@ -26,7 +26,7 @@
       <div v-if="result">
         <el-divider />
         <h4>Summary</h4>
-        <pre>{{ result.summary }}</pre>
+        <ul><li>{{ result.summary }}</li></ul>
 
         <h4>Severity distribution</h4>
         <ul>
@@ -58,27 +58,26 @@ const result = ref<any>(null)
 
 async function generate() {
   loading.value = true
-  // Demo: local summary computed from mock API
-  const tickets = await api.listTickets()
-  const severity: Record<string, number> = {}
-  const modules: Record<string, number> = {}
-  for (const t of tickets) {
-    severity[t.severity] = (severity[t.severity] || 0) + 1
-    const m = t.module || 'Unknown'
-    modules[m] = (modules[m] || 0) + 1
+
+  try {
+    // Load (mock) tickets, you will restore real listTickets() later
+    const tickets = await api.listTickets();
+
+    result.value = await api.generateInsights({
+      tickets: tickets,
+      start: start.value,
+      end: end.value
+    })
+
+  } catch (err) {
+    console.error(err)
+    result.value = { summary: "Failed to call DeepSeek API." }
+  } finally {
+    loading.value = false
   }
-  const sortedModules = Object.entries(modules).sort((a,b)=> b[1]-a[1]).map(([k])=>k).slice(0,5)
-  result.value = {
-    summary: `Analyzed ${tickets.length} tickets (demo).`,
-    severity,
-    modules: sortedModules,
-    suggestions: [
-      'If many CRITICAL in same module: increase code review and add unit tests for that module.',
-      'Shorten turnaround time by setting SLA for developers to respond to critical tickets.'
-    ]
-  }
-  loading.value = false
 }
+
+
 </script>
 
 <style scoped>

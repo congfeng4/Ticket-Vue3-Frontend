@@ -142,6 +142,78 @@ export default {
       }
   },
 
+  async generateInsights(params: { tickets: any[], start: any, end: any }) {
+    const { tickets, start, end } = params
+
+    // Convert start/end to timestamps
+    const startTime = start ? new Date(start).getTime() : null
+    const endTime = end ? new Date(end).getTime() : null
+
+    // Filter tickets by date range
+    const filtered = tickets.filter(ticket => {
+      const t = new Date(ticket.created_at).getTime()
+      if (startTime && t < startTime) return false
+      if (endTime && t > endTime) return false
+      return true
+    })
+
+    // Prepare DeepSeek payload
+    const payload = {
+      model: "deepseek-chat",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a software quality analysis assistant. You MUST output a single JSON object with EXACTLY these fields: summary (string), severity (object counting tickets by severity), modules (array of unique modules with highest frequency first), suggestions (array of improvement recommendations). Do not output any code block or markdown."
+        },
+        {
+          role: "user",
+          content: `
+            Analyze the following tickets and produce ONLY the aggregated JSON structure:
+
+            - summary: Overall description of what the tickets indicate
+            - severity: Count tickets by severity (CRITICAL, MAJOR, MINOR, etc.)
+            - modules: List of modules sorted by how often they appear
+            - suggestions: High-value engineering improvement recommendations
+
+            Here are the tickets:
+            ${JSON.stringify(filtered, null, 2)}
+                  `
+        }
+      ]
+    }
+
+
+    // Use fetch to call DeepSeek API
+    const resp = await fetch("https://api.deepseek.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${import.meta.env.VITE_DEEPSEEK_API_KEY}`
+      },
+      body: JSON.stringify(payload)
+    })
+
+    const data = await resp.json()
+
+    // Extract model output
+    let text = data.choices?.[0]?.message?.content || ""
+
+    // Remove Markdown wrappers
+    text = text.replace(/```json/gi, "").replace(/```/g, "").trim()
+
+    // Parse JSON
+    try {
+      return JSON.parse(text)
+    } catch (err) {
+      console.error("JSON parse error:", err, "raw:", text)
+      return {
+        summary: "The model returned content that could not be parsed as JSON.",
+        raw: text
+      }
+    }
+  }
+
 }
 
 
