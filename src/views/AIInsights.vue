@@ -60,7 +60,6 @@ async function generate() {
   loading.value = true
 
   try {
-    // Load (mock) tickets, you will restore real listTickets() later
     const tickets = await api.listTickets();
 
     result.value = await api.generateInsights({

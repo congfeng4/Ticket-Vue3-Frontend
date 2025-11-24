@@ -35,7 +35,7 @@
 
         <el-form-item label="Assign to (Developer)">
           <el-select v-model="form.assignee" placeholder="Select developer">
-            <el-option v-for="u in developers" :key="u.id" :label="u.fullName || u.username" :value="u" />
+            <el-option v-for="u in developers" :key="u.id" :label="u.fullName || u.username" :value="u.id" />
           </el-select>
         </el-form-item>
 
