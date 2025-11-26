@@ -16,7 +16,7 @@
 
       <el-form-item label="Self-test screenshot">
         <el-upload
-          class="upload-demo"
+          class="upload"
           action=""
           :auto-upload="false"
           :file-list="uploadList"

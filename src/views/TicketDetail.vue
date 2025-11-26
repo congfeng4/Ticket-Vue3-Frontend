@@ -77,19 +77,19 @@ onMounted(async () => {
 async function submitDevReport(rep: any, files: File[]) {
   await api.submitDevReport(id, rep, files);
   ticket.value = await api.getTicket(id);
-  alert("Developer report submitted to QA (demo).");
+  alert("Developer report submitted to QA.");
 }
 
 async function submitQA(review: any) {
   await api.submitQAReview(id, review);
   ticket.value = await api.getTicket(id);
-  alert("QA review submitted (demo).");
+  alert("QA review submitted.");
 }
 
 async function submitRegression(r: any) {
   await api.submitRegression(id, r);
   ticket.value = await api.getTicket(id);
-  alert("Regression submitted (demo).");
+  alert("Regression submitted.");
 }
 
 const isDev = computed(() => {

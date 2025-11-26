@@ -49,7 +49,6 @@ export type TicketStatus =
   | 'IN_REGRESSION'
   | 'CLOSED'
   | 'IN_MODIFICATION'
-  | 'REOPENED'
 
 export interface Ticket {
   id: string

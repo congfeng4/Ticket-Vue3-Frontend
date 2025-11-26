@@ -22,7 +22,7 @@ import { reactive } from 'vue'
 const props = defineProps({})
 const emits = defineEmits(['apply'])
 
-const statuses = ['OPEN','IN_DEVELOPMENT','UNDER_REVIEW','IN_REGRESSION','CLOSED','IN_MODIFICATION','REOPENED']
+const statuses = ['OPEN','IN_DEVELOPMENT','UNDER_REVIEW','IN_REGRESSION','CLOSED','IN_MODIFICATION']
 const severities = ['HINT','NORMAL','SEVERE','CRITICAL']
 
 const filters = reactive({

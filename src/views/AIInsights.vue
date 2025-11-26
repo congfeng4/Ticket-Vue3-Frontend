@@ -2,8 +2,8 @@
 <template>
   <div class="container">
     <el-card>
-      <h3>AI Insights (Demo)</h3>
-      <p>This page is a placeholder for optional AI analysis. In production it would call backend analytics that aggregates tickets over a time range and returns summaries, distributions, and suggestions.</p>
+      <h3>AI Insights</h3>
+      <p>AI analysis: analytics that aggregates tickets over a time range and returns summaries, distributions, and suggestions.</p>
 
       <el-form label-position="top" style="max-width:420px;">
         <el-form-item label="Start">

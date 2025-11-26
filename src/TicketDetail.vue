@@ -27,7 +27,7 @@
             <DevReportForm @submit="submitDevReport" />
           </div>
           <div v-else-if="!isDev">
-            <p style="color:#666;">Developer report view (demo) — when developer submits, content will appear here.</p>
+            <p style="color:#666;">Developer report view — when developer submits, content will appear here.</p>
           </div>
           <div v-else>
             <p style="color:#666;">This ticket is closed and cannot be modified.</p>
@@ -89,7 +89,7 @@ async function submitDevReport(rep: any) {
   }
   await api.submitDevReport(id, rep)
   ticket.value = await api.getTicket(id)
-  alert('Developer report submitted to QA (demo).')
+  alert('Developer report submitted to QA.')
 }
 
 async function submitQA(review: any) {
@@ -99,7 +99,7 @@ async function submitQA(review: any) {
   }
   await api.submitQAReview(id, review)
   ticket.value = await api.getTicket(id)
-  alert('QA review submitted (demo).')
+  alert('QA review submitted.')
 }
 
 async function submitRegression(r: any) {
@@ -109,7 +109,7 @@ async function submitRegression(r: any) {
   }
   await api.submitRegression(id, r)
   ticket.value = await api.getTicket(id)
-  alert('Regression submitted (demo).')
+  alert('Regression submitted.')
 }
 
 const isDev = computed(() => auth.user?.role === 'DEVELOPER')

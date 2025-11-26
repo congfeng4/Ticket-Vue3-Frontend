@@ -5,7 +5,7 @@
       <el-col :span="16">
         <el-card>
           <h3>Welcome</h3>
-          <p>Role-aware dashboard (demo). Use Tickets to create & manage flows.</p>
+          <p>Technical Ticket System with AI-Insights. Use Tickets to create & manage flows.</p>
         </el-card>
       </el-col>
 
